@@ -880,37 +880,37 @@
       <div class="videos-track" id="videosTrack">
         <div class="video-slide" data-video-id="0-XzCBcEkSk">
           <button type="button" class="video-facade" aria-label="Reproduzir vídeo 1">
-            <img src="https://img.youtube.com/vi/0-XzCBcEkSk/hqdefault.jpg" alt="">
+            <img data-src="https://img.youtube.com/vi/0-XzCBcEkSk/hqdefault.jpg" alt="" class="lazy-thumb">
             <span class="play-icon" aria-hidden="true">&#9658;</span>
           </button>
         </div>
         <div class="video-slide" data-video-id="B8vslCwj7A8">
           <button type="button" class="video-facade" aria-label="Reproduzir vídeo 2">
-            <img src="https://img.youtube.com/vi/B8vslCwj7A8/hqdefault.jpg" alt="">
+            <img data-src="https://img.youtube.com/vi/B8vslCwj7A8/hqdefault.jpg" alt="" class="lazy-thumb">
             <span class="play-icon" aria-hidden="true">&#9658;</span>
           </button>
         </div>
         <div class="video-slide" data-video-id="haNGDVpHglI">
           <button type="button" class="video-facade" aria-label="Reproduzir vídeo 3">
-            <img src="https://img.youtube.com/vi/haNGDVpHglI/hqdefault.jpg" alt="">
+            <img data-src="https://img.youtube.com/vi/haNGDVpHglI/hqdefault.jpg" alt="" class="lazy-thumb">
             <span class="play-icon" aria-hidden="true">&#9658;</span>
           </button>
         </div>
         <div class="video-slide" data-video-id="N-e6DZB82fI">
           <button type="button" class="video-facade" aria-label="Reproduzir vídeo 4">
-            <img src="https://img.youtube.com/vi/N-e6DZB82fI/hqdefault.jpg" alt="">
+            <img data-src="https://img.youtube.com/vi/N-e6DZB82fI/hqdefault.jpg" alt="" class="lazy-thumb">
             <span class="play-icon" aria-hidden="true">&#9658;</span>
           </button>
         </div>
         <div class="video-slide" data-video-id="-fBoXK2w2L4">
           <button type="button" class="video-facade" aria-label="Reproduzir vídeo 5">
-            <img src="https://img.youtube.com/vi/-fBoXK2w2L4/hqdefault.jpg" alt="">
+            <img data-src="https://img.youtube.com/vi/-fBoXK2w2L4/hqdefault.jpg" alt="" class="lazy-thumb">
             <span class="play-icon" aria-hidden="true">&#9658;</span>
           </button>
         </div>
         <div class="video-slide" data-video-id="filtKNX7Rjc">
           <button type="button" class="video-facade" aria-label="Reproduzir vídeo 6">
-            <img src="https://img.youtube.com/vi/filtKNX7Rjc/hqdefault.jpg" alt="">
+            <img data-src="https://img.youtube.com/vi/filtKNX7Rjc/hqdefault.jpg" alt="" class="lazy-thumb">
             <span class="play-icon" aria-hidden="true">&#9658;</span>
           </button>
         </div>
@@ -1118,10 +1118,30 @@
   const prevBtn = document.getElementById('videosPrev');
   const nextBtn = document.getElementById('videosNext');
   const isDesktop = () => window.matchMedia('(min-width:981px)').matches;
+  const allSlides = Array.from(track.querySelectorAll('.video-slide'));
+
+  // Carrega a miniatura (thumbnail) de um slide manualmente via JS, no
+  // exato momento em que ele precisa aparecer — em vez de deixar o
+  // navegador decidir sozinho quando buscar imagens fora da área visível
+  // (é isso que fazia as miniaturas 2+ nunca aparecerem em alguns celulares).
+  function loadSlideThumb(slide){
+    if(!slide) return;
+    const img = slide.querySelector('img.lazy-thumb[data-src]');
+    if(!img) return;
+    img.src = img.getAttribute('data-src');
+    img.removeAttribute('data-src');
+  }
+  function loadThumbByIndex(i){
+    if(i < 0 || i >= allSlides.length) return;
+    loadSlideThumb(allSlides[i]);
+  }
+  // Carrega a primeira e a segunda miniaturas assim que a página abre
+  loadThumbByIndex(0);
+  loadThumbByIndex(1);
 
   // ---- MOBILE: 1 vídeo por vez, com dots ----
   let current = 0;
-  const mobileSlides = Array.from(track.querySelectorAll('.video-slide'));
+  const mobileSlides = allSlides;
   mobileSlides.forEach((_, i) => {
     const d = document.createElement('span');
     if(i === 0) d.classList.add('active');
@@ -1131,6 +1151,11 @@
   const dots = dotsWrap.querySelectorAll('span');
   function goToMobile(i){
     current = (i + mobileSlides.length) % mobileSlides.length;
+    // carrega a miniatura do slide atual e a das vizinhas (pra swipe ficar suave)
+    loadThumbByIndex(current);
+    loadThumbByIndex((current + 1) % mobileSlides.length);
+    loadThumbByIndex((current - 1 + mobileSlides.length) % mobileSlides.length);
+    track.style.transition = 'transform .5s ease';
     track.style.transform = `translateX(-${current * 100}%)`;
     dots.forEach((d, di) => d.classList.toggle('active', di === current));
   }
@@ -1144,6 +1169,8 @@
   function nextDesktop(){
     if(animating) return;
     animating = true;
+    // garante que a próxima miniatura a entrar na tela (a 5ª visível) já esteja carregada
+    loadSlideThumb(track.children[4]);
     const step = stepPx();
     track.style.transition = 'transform .5s ease';
     track.style.transform = `translateX(-${step}px)`;
@@ -1158,6 +1185,8 @@
   function prevDesktop(){
     if(animating) return;
     animating = true;
+    // garante que a miniatura que vai entrar pela esquerda já esteja carregada
+    loadSlideThumb(track.lastElementChild);
     track.style.transition = 'none';
     track.insertBefore(track.lastElementChild, track.firstElementChild);
     const step = stepPx();
@@ -1182,7 +1211,12 @@
   window.addEventListener('resize', () => {
     track.style.transition = 'none';
     track.style.transform = isDesktop() ? 'translateX(0)' : `translateX(-${current * 100}%)`;
+    // ao entrar no modo desktop, garante que as 4 miniaturas visíveis estejam carregadas
+    if(isDesktop()){
+      Array.from(track.children).slice(0,4).forEach(loadSlideThumb);
+    }
   });
+
 </script>
 </body>
 </html>
