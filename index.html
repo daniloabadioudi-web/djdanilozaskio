@@ -533,6 +533,47 @@
     background:#000;
     object-fit:cover;
   }
+  /* Capa (poster) como <img> normal, sobreposta ao vídeo. Diferente do
+     atributo poster do <video>, uma <img> comum é sempre baixada pelo
+     navegador de imediato, mesmo em slides que começam fora da área
+     visível do carrossel — evita a tela ficar preta nos vídeos 2+. */
+  .video-poster{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    padding:0;
+    margin:0;
+    border:0;
+    cursor:pointer;
+    background:#000;
+    display:block;
+    z-index:2;
+  }
+  .video-poster img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+  }
+  .video-poster .play-icon{
+    position:absolute;
+    top:50%;left:50%;
+    transform:translate(-50%,-50%);
+    width:64px;height:64px;
+    border-radius:50%;
+    background:rgba(224,20,31,0.92);
+    color:var(--white);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:22px;
+    padding-left:4px;
+    box-shadow:0 8px 24px -8px rgba(224,20,31,0.8);
+    transition:transform .2s ease, background .2s ease;
+  }
+  .video-poster:hover .play-icon{background:var(--red-bright);transform:translate(-50%,-50%) scale(1.08);}
+  .video-poster.is-hidden{display:none;}
   .videos-nav{
     display:flex;
     justify-content:center;
@@ -843,22 +884,46 @@
     <div class="videos-carousel reveal">
       <div class="videos-track" id="videosTrack">
         <div class="video-slide">
-          <video src="assets/VIDEO_01.mp4" poster="assets/VIDEO_01.jpg" title="Vídeo 1" controls playsinline preload="metadata"></video>
+          <video class="local-video" src="assets/VIDEO_01.mp4" title="Vídeo 1" playsinline preload="metadata" controls></video>
+          <button type="button" class="video-poster" aria-label="Reproduzir vídeo 1">
+            <img src="assets/VIDEO_01.jpg" alt="">
+            <span class="play-icon" aria-hidden="true">&#9658;</span>
+          </button>
         </div>
         <div class="video-slide">
-          <video src="assets/VIDEO_02.mp4" poster="assets/VIDEO_02.jpg" title="Vídeo 2" controls playsinline preload="metadata"></video>
+          <video class="local-video" src="assets/VIDEO_02.mp4" title="Vídeo 2" playsinline preload="metadata" controls></video>
+          <button type="button" class="video-poster" aria-label="Reproduzir vídeo 2">
+            <img src="assets/VIDEO_02.jpg" alt="">
+            <span class="play-icon" aria-hidden="true">&#9658;</span>
+          </button>
         </div>
         <div class="video-slide">
-          <video src="assets/VIDEO_03.mp4" poster="assets/VIDEO_03.jpg" title="Vídeo 3" controls playsinline preload="metadata"></video>
+          <video class="local-video" src="assets/VIDEO_03.mp4" title="Vídeo 3" playsinline preload="metadata" controls></video>
+          <button type="button" class="video-poster" aria-label="Reproduzir vídeo 3">
+            <img src="assets/VIDEO_03.jpg" alt="">
+            <span class="play-icon" aria-hidden="true">&#9658;</span>
+          </button>
         </div>
         <div class="video-slide">
-          <video src="assets/VIDEO_04.mp4" poster="assets/VIDEO_04.jpg" title="Vídeo 4" controls playsinline preload="metadata"></video>
+          <video class="local-video" src="assets/VIDEO_04.mp4" title="Vídeo 4" playsinline preload="metadata" controls></video>
+          <button type="button" class="video-poster" aria-label="Reproduzir vídeo 4">
+            <img src="assets/VIDEO_04.jpg" alt="">
+            <span class="play-icon" aria-hidden="true">&#9658;</span>
+          </button>
         </div>
         <div class="video-slide">
-          <video src="assets/VIDEO_05.mp4" poster="assets/VIDEO_05.jpg" title="Vídeo 5" controls playsinline preload="metadata"></video>
+          <video class="local-video" src="assets/VIDEO_05.mp4" title="Vídeo 5" playsinline preload="metadata" controls></video>
+          <button type="button" class="video-poster" aria-label="Reproduzir vídeo 5">
+            <img src="assets/VIDEO_05.jpg" alt="">
+            <span class="play-icon" aria-hidden="true">&#9658;</span>
+          </button>
         </div>
         <div class="video-slide">
-          <video src="assets/VIDEO_06.mp4" poster="assets/VIDEO_06.jpg" title="Vídeo 6" controls playsinline preload="metadata"></video>
+          <video class="local-video" src="assets/VIDEO_06.mp4" title="Vídeo 6" playsinline preload="metadata" controls></video>
+          <button type="button" class="video-poster" aria-label="Reproduzir vídeo 6">
+            <img src="assets/VIDEO_06.jpg" alt="">
+            <span class="play-icon" aria-hidden="true">&#9658;</span>
+          </button>
         </div>
       </div>
       <div class="videos-nav">
@@ -1047,10 +1112,23 @@
   const isDesktop = () => window.matchMedia('(min-width:981px)').matches;
   const allSlides = Array.from(track.querySelectorAll('.video-slide'));
 
-  // Pausa todos os vídeos (evita áudio tocando fora de tela ao navegar no carrossel)
+  // Pausa todos os vídeos e volta a mostrar a capa (evita áudio tocando fora
+  // de tela ao navegar, e evita depender do <video> renderizar sozinho
+  // quando volta a ficar visível)
   function pauseAllVideos(){
     track.querySelectorAll('video').forEach(v => v.pause());
+    track.querySelectorAll('.video-poster').forEach(p => p.classList.remove('is-hidden'));
   }
+
+  // Clique na capa: esconde a capa e toca o vídeo
+  track.querySelectorAll('.video-poster').forEach(poster => {
+    poster.addEventListener('click', () => {
+      const video = poster.previousElementSibling;
+      if(!video) return;
+      poster.classList.add('is-hidden');
+      video.play().catch(() => {});
+    });
+  });
 
   // ---- MOBILE: 1 vídeo por vez, com dots ----
   let current = 0;
@@ -1062,13 +1140,33 @@
     dotsWrap.appendChild(d);
   });
   const dots = dotsWrap.querySelectorAll('span');
+  // Depois que a transição termina, esconde totalmente (visibility:hidden)
+  // todos os slides que não são o atual — evita qualquer resquício visual
+  // do slide anterior "grudado" na borda depois de deslizar (bug comum de
+  // renderização de <video> com transform em navegadores mobile).
+  function syncMobileVisibility(){
+    if(isDesktop()) return;
+    mobileSlides.forEach((slide, i) => {
+      const visible = i === current;
+      slide.style.visibility = visible ? 'visible' : 'hidden';
+      slide.style.pointerEvents = visible ? 'auto' : 'none';
+    });
+  }
   function goToMobile(i){
     pauseAllVideos();
     current = (i + mobileSlides.length) % mobileSlides.length;
+    // mostra o slide de destino já no início do movimento (ele está entrando)
+    mobileSlides[current].style.visibility = 'visible';
+    mobileSlides[current].style.pointerEvents = 'auto';
     track.style.transition = 'transform .5s ease';
     track.style.transform = `translateX(-${current * 100}%)`;
     dots.forEach((d, di) => d.classList.toggle('active', di === current));
+    track.addEventListener('transitionend', function handler(){
+      track.removeEventListener('transitionend', handler);
+      syncMobileVisibility();
+    }, {once:true});
   }
+  syncMobileVisibility();
 
   // ---- DESKTOP: 3 vídeos visíveis, avança 1 por vez, loop infinito ----
   let animating = false;
@@ -1119,6 +1217,12 @@
   window.addEventListener('resize', () => {
     track.style.transition = 'none';
     track.style.transform = isDesktop() ? 'translateX(0)' : `translateX(-${current * 100}%)`;
+    if(isDesktop()){
+      // no desktop os 3 vídeos precisam estar visíveis ao mesmo tempo
+      mobileSlides.forEach(slide => { slide.style.visibility = 'visible'; slide.style.pointerEvents = 'auto'; });
+    } else {
+      syncMobileVisibility();
+    }
   });
 
 </script>
