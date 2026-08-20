@@ -517,16 +517,56 @@
     background:var(--black-3);
   }
   .video-slide{
+    position:relative;
     min-width:100%;
+    aspect-ratio:9/16;
+    background:#000;
     transition:transform .5s ease;
   }
   .video-slide iframe{
+    position:absolute;
+    inset:0;
     width:100%;
+    height:100%;
     display:block;
     border:0;
-    aspect-ratio:9/16;
     background:#000;
   }
+  .video-facade{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    padding:0;
+    margin:0;
+    border:0;
+    cursor:pointer;
+    background:#000;
+    display:block;
+  }
+  .video-facade img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+  }
+  .video-facade .play-icon{
+    position:absolute;
+    top:50%;left:50%;
+    transform:translate(-50%,-50%);
+    width:64px;height:64px;
+    border-radius:50%;
+    background:rgba(224,20,31,0.92);
+    color:var(--white);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:22px;
+    padding-left:4px;
+    box-shadow:0 8px 24px -8px rgba(224,20,31,0.8);
+    transition:transform .2s ease, background .2s ease;
+  }
+  .video-facade:hover .play-icon{background:var(--red-bright);transform:translate(-50%,-50%) scale(1.08);}
   .videos-nav{
     display:flex;
     justify-content:center;
@@ -572,10 +612,12 @@
       min-width:calc(25% - 15px);
       flex-shrink:0;
     }
-    .video-slide iframe{
+    .video-slide iframe,
+    .video-facade{
       border-radius:14px;
       border:1px solid var(--line);
       background:var(--black-3);
+      overflow:hidden;
     }
     .videos-nav{
       margin-top:0;
@@ -836,23 +878,41 @@
     </div>
     <div class="videos-carousel reveal">
       <div class="videos-track" id="videosTrack">
-        <div class="video-slide">
-          <iframe src="https://www.youtube.com/embed/0-XzCBcEkSk" loading="lazy" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" title="Danilo Zaskio - vídeo 1" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+        <div class="video-slide" data-video-id="0-XzCBcEkSk">
+          <button type="button" class="video-facade" aria-label="Reproduzir vídeo 1">
+            <img src="https://img.youtube.com/vi/0-XzCBcEkSk/hqdefault.jpg" alt="" loading="lazy">
+            <span class="play-icon" aria-hidden="true">&#9658;</span>
+          </button>
         </div>
-        <div class="video-slide">
-          <iframe src="https://www.youtube.com/embed/B8vslCwj7A8" loading="lazy" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" title="Danilo Zaskio - vídeo 2" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+        <div class="video-slide" data-video-id="B8vslCwj7A8">
+          <button type="button" class="video-facade" aria-label="Reproduzir vídeo 2">
+            <img src="https://img.youtube.com/vi/B8vslCwj7A8/hqdefault.jpg" alt="" loading="lazy">
+            <span class="play-icon" aria-hidden="true">&#9658;</span>
+          </button>
         </div>
-        <div class="video-slide">
-          <iframe src="https://www.youtube.com/embed/haNGDVpHglI" loading="lazy" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" title="Danilo Zaskio - vídeo 3" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+        <div class="video-slide" data-video-id="haNGDVpHglI">
+          <button type="button" class="video-facade" aria-label="Reproduzir vídeo 3">
+            <img src="https://img.youtube.com/vi/haNGDVpHglI/hqdefault.jpg" alt="" loading="lazy">
+            <span class="play-icon" aria-hidden="true">&#9658;</span>
+          </button>
         </div>
-        <div class="video-slide">
-          <iframe src="https://www.youtube.com/embed/N-e6DZB82fI" loading="lazy" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" title="Danilo Zaskio - vídeo 4" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+        <div class="video-slide" data-video-id="N-e6DZB82fI">
+          <button type="button" class="video-facade" aria-label="Reproduzir vídeo 4">
+            <img src="https://img.youtube.com/vi/N-e6DZB82fI/hqdefault.jpg" alt="" loading="lazy">
+            <span class="play-icon" aria-hidden="true">&#9658;</span>
+          </button>
         </div>
-        <div class="video-slide">
-          <iframe src="https://www.youtube.com/embed/-fBoXK2w2L4" loading="lazy" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" title="Danilo Zaskio - vídeo 5" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+        <div class="video-slide" data-video-id="-fBoXK2w2L4">
+          <button type="button" class="video-facade" aria-label="Reproduzir vídeo 5">
+            <img src="https://img.youtube.com/vi/-fBoXK2w2L4/hqdefault.jpg" alt="" loading="lazy">
+            <span class="play-icon" aria-hidden="true">&#9658;</span>
+          </button>
         </div>
-        <div class="video-slide">
-          <iframe src="https://www.youtube.com/embed/filtKNX7Rjc" loading="lazy" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" title="Danilo Zaskio - vídeo 6" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+        <div class="video-slide" data-video-id="filtKNX7Rjc">
+          <button type="button" class="video-facade" aria-label="Reproduzir vídeo 6">
+            <img src="https://img.youtube.com/vi/filtKNX7Rjc/hqdefault.jpg" alt="" loading="lazy">
+            <span class="play-icon" aria-hidden="true">&#9658;</span>
+          </button>
         </div>
       </div>
       <div class="videos-nav">
@@ -878,7 +938,7 @@
           <a href="#"><img src="assets/crop_show2.jpg" alt="Efeitos especiais no evento"></a>
         </div>
         <p>Dos maiores hits do funk atual às lendárias músicas da Furacão 2000, Summer Eletrohits e outros sucessos nacionais e internacionais que marcaram época, tudo ganha uma nova identidade em remixes atuais e exclusivos, criando uma experiência musical que conecta diferentes gerações e mantém a pista em alta energia do início ao fim.</p>
-        <p>Para tornar tudo ainda mais marcante, o show conta com uma experiência completa de efeitos com a <strong>bazooka de CO₂</strong> e interações pensadas para surpreender os convidados e transformar os momentos mais importantes da festa em experiências inesquecíveis.</p>
+        <p>Para tornar tudo ainda mais marcante, o show conta com uma experiência completa de efeitos com <strong>bazooka de CO₂</strong> e interações, pensados para surpreender os convidados e transformar os momentos mais importantes da festa em experiências inesquecíveis.</p>
       </div>
     </div>
   </div>
@@ -972,6 +1032,7 @@
     <p>&copy; 2026 Danilo Zaskio. Todos os direitos reservados.</p>
   </div>
 </footer>
+
 <script>
   // header scroll state
   const header = document.getElementById('siteHeader');
@@ -1010,7 +1071,7 @@
 
       // ===== 1) Envia uma cópia para o Google Sheets =====
       // TODO: troque pela URL do seu Web App do Google Apps Script (veja instruções)
-      const GOOGLE_SHEETS_URL = 'COLE_AQUI_A_URL_DO_SEU_APPS_SCRIPT';
+      const GOOGLE_SHEETS_URL = 'https://script.google.com/macros/s/AKfycbySeEwZIRJJiLr-7U-YjXc1WPDtuTBNJHadZR5l3by0giDfaZKiqGV6E_xsjiCLaurB5A/exec';
       if(GOOGLE_SHEETS_URL && GOOGLE_SHEETS_URL.startsWith('http')){
         fetch(GOOGLE_SHEETS_URL, {
           method: 'POST',
@@ -1029,10 +1090,29 @@
         + (local ? `*Local:* ${local}%0A` : '')
         + (origem ? `*Onde conheceu:* ${origem}` : '');
       // TODO: troque 55SEUNUMERO pelo número real com DDI+DDD (ex: 5534999999999)
-      window.open(`https://wa.me/55SEUNUMERO?text=${msg}`, '_blank');
+      window.open(`https://wa.me/5534991997273?text=${msg}`, '_blank');
     });
   }
   // ===== CARROSSEL DE VÍDEOS =====
+  // Facade: só cria o <iframe> do YouTube quando o usuário clica no play.
+  // Evita carregar 6 players do YouTube de uma vez (causa comum de o carrossel
+  // "travar" no primeiro vídeo em navegadores mobile).
+  function playVideoSlide(slide){
+    const videoId = slide.getAttribute('data-video-id');
+    const facade = slide.querySelector('.video-facade');
+    if(!videoId || !facade) return;
+    const iframe = document.createElement('iframe');
+    iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&playsinline=1`;
+    iframe.title = facade.getAttribute('aria-label') || 'Vídeo';
+    iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+    iframe.allowFullscreen = true;
+    iframe.referrerPolicy = 'strict-origin-when-cross-origin';
+    facade.replaceWith(iframe);
+  }
+  document.querySelectorAll('.video-slide .video-facade').forEach(facade => {
+    facade.addEventListener('click', () => playVideoSlide(facade.closest('.video-slide')));
+  });
+
   const track = document.getElementById('videosTrack');
   const dotsWrap = document.getElementById('videosDots');
   const prevBtn = document.getElementById('videosPrev');
