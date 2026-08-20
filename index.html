@@ -561,16 +561,21 @@
     top:50%;left:50%;
     transform:translate(-50%,-50%);
     width:64px;height:64px;
+    aspect-ratio:1/1;
     border-radius:50%;
     background:rgba(224,20,31,0.92);
     color:var(--white);
     display:flex;
     align-items:center;
     justify-content:center;
-    font-size:22px;
-    padding-left:4px;
     box-shadow:0 8px 24px -8px rgba(224,20,31,0.8);
     transition:transform .2s ease, background .2s ease;
+  }
+  .video-poster .play-icon svg{
+    width:24px;
+    height:24px;
+    display:block;
+    margin-left:3px;
   }
   .video-poster:hover .play-icon{background:var(--red-bright);transform:translate(-50%,-50%) scale(1.08);}
   .video-poster.is-hidden{display:none;}
@@ -887,42 +892,42 @@
           <video class="local-video" src="assets/VIDEO_01.mp4" title="Vídeo 1" playsinline preload="metadata" controls></video>
           <button type="button" class="video-poster" aria-label="Reproduzir vídeo 1">
             <img src="assets/VIDEO_01.jpg" alt="">
-            <span class="play-icon" aria-hidden="true">&#9658;</span>
+            <span class="play-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
           </button>
         </div>
         <div class="video-slide">
           <video class="local-video" src="assets/VIDEO_02.mp4" title="Vídeo 2" playsinline preload="metadata" controls></video>
           <button type="button" class="video-poster" aria-label="Reproduzir vídeo 2">
             <img src="assets/VIDEO_02.jpg" alt="">
-            <span class="play-icon" aria-hidden="true">&#9658;</span>
+            <span class="play-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
           </button>
         </div>
         <div class="video-slide">
           <video class="local-video" src="assets/VIDEO_03.mp4" title="Vídeo 3" playsinline preload="metadata" controls></video>
           <button type="button" class="video-poster" aria-label="Reproduzir vídeo 3">
             <img src="assets/VIDEO_03.jpg" alt="">
-            <span class="play-icon" aria-hidden="true">&#9658;</span>
+            <span class="play-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
           </button>
         </div>
         <div class="video-slide">
           <video class="local-video" src="assets/VIDEO_04.mp4" title="Vídeo 4" playsinline preload="metadata" controls></video>
           <button type="button" class="video-poster" aria-label="Reproduzir vídeo 4">
             <img src="assets/VIDEO_04.jpg" alt="">
-            <span class="play-icon" aria-hidden="true">&#9658;</span>
+            <span class="play-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
           </button>
         </div>
         <div class="video-slide">
           <video class="local-video" src="assets/VIDEO_05.mp4" title="Vídeo 5" playsinline preload="metadata" controls></video>
           <button type="button" class="video-poster" aria-label="Reproduzir vídeo 5">
             <img src="assets/VIDEO_05.jpg" alt="">
-            <span class="play-icon" aria-hidden="true">&#9658;</span>
+            <span class="play-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
           </button>
         </div>
         <div class="video-slide">
           <video class="local-video" src="assets/VIDEO_06.mp4" title="Vídeo 6" playsinline preload="metadata" controls></video>
           <button type="button" class="video-poster" aria-label="Reproduzir vídeo 6">
             <img src="assets/VIDEO_06.jpg" alt="">
-            <span class="play-icon" aria-hidden="true">&#9658;</span>
+            <span class="play-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
           </button>
         </div>
       </div>
