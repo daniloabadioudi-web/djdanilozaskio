@@ -523,7 +523,7 @@
     background:#000;
     transition:transform .5s ease;
   }
-  .video-slide iframe{
+  .video-slide video{
     position:absolute;
     inset:0;
     width:100%;
@@ -531,42 +531,8 @@
     display:block;
     border:0;
     background:#000;
-  }
-  .video-facade{
-    position:absolute;
-    inset:0;
-    width:100%;
-    height:100%;
-    padding:0;
-    margin:0;
-    border:0;
-    cursor:pointer;
-    background:#000;
-    display:block;
-  }
-  .video-facade img{
-    width:100%;
-    height:100%;
     object-fit:cover;
-    display:block;
   }
-  .video-facade .play-icon{
-    position:absolute;
-    top:50%;left:50%;
-    transform:translate(-50%,-50%);
-    width:64px;height:64px;
-    border-radius:50%;
-    background:rgba(224,20,31,0.92);
-    color:var(--white);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:22px;
-    padding-left:4px;
-    box-shadow:0 8px 24px -8px rgba(224,20,31,0.8);
-    transition:transform .2s ease, background .2s ease;
-  }
-  .video-facade:hover .play-icon{background:var(--red-bright);transform:translate(-50%,-50%) scale(1.08);}
   .videos-nav{
     display:flex;
     justify-content:center;
@@ -598,7 +564,7 @@
     transition:background .2s ease;
   }
   .videos-dots span.active{background:var(--red-bright);}
-  /* Desktop: carrossel com 4 vídeos visíveis por vez + setas nas laterais, loop infinito */
+  /* Desktop: carrossel com 3 vídeos visíveis por vez + setas nas laterais, loop infinito */
   @media (min-width:981px){
     .videos-carousel{max-width:100%;padding:0 64px;}
     .videos-track{
@@ -609,15 +575,13 @@
       gap:20px;
     }
     .video-slide{
-      min-width:calc(25% - 15px);
+      min-width:calc((100% - 40px) / 3);
       flex-shrink:0;
     }
-    .video-slide iframe,
-    .video-facade{
+    .video-slide video{
       border-radius:14px;
       border:1px solid var(--line);
       background:var(--black-3);
-      overflow:hidden;
     }
     .videos-nav{
       margin-top:0;
@@ -878,41 +842,23 @@
     </div>
     <div class="videos-carousel reveal">
       <div class="videos-track" id="videosTrack">
-        <div class="video-slide" data-video-id="0-XzCBcEkSk">
-          <button type="button" class="video-facade" aria-label="Reproduzir vídeo 1">
-            <img data-src="https://img.youtube.com/vi/0-XzCBcEkSk/hqdefault.jpg" alt="" class="lazy-thumb">
-            <span class="play-icon" aria-hidden="true">&#9658;</span>
-          </button>
+        <div class="video-slide">
+          <video src="assets/VIDEO_01.mp4" title="Vídeo 1" controls playsinline preload="metadata"></video>
         </div>
-        <div class="video-slide" data-video-id="B8vslCwj7A8">
-          <button type="button" class="video-facade" aria-label="Reproduzir vídeo 2">
-            <img data-src="https://img.youtube.com/vi/B8vslCwj7A8/hqdefault.jpg" alt="" class="lazy-thumb">
-            <span class="play-icon" aria-hidden="true">&#9658;</span>
-          </button>
+        <div class="video-slide">
+          <video src="assets/VIDEO_02.mp4" title="Vídeo 2" controls playsinline preload="metadata"></video>
         </div>
-        <div class="video-slide" data-video-id="haNGDVpHglI">
-          <button type="button" class="video-facade" aria-label="Reproduzir vídeo 3">
-            <img data-src="https://img.youtube.com/vi/haNGDVpHglI/hqdefault.jpg" alt="" class="lazy-thumb">
-            <span class="play-icon" aria-hidden="true">&#9658;</span>
-          </button>
+        <div class="video-slide">
+          <video src="assets/VIDEO_03.mp4" title="Vídeo 3" controls playsinline preload="metadata"></video>
         </div>
-        <div class="video-slide" data-video-id="N-e6DZB82fI">
-          <button type="button" class="video-facade" aria-label="Reproduzir vídeo 4">
-            <img data-src="https://img.youtube.com/vi/N-e6DZB82fI/hqdefault.jpg" alt="" class="lazy-thumb">
-            <span class="play-icon" aria-hidden="true">&#9658;</span>
-          </button>
+        <div class="video-slide">
+          <video src="assets/VIDEO_04.mp4" title="Vídeo 4" controls playsinline preload="metadata"></video>
         </div>
-        <div class="video-slide" data-video-id="-fBoXK2w2L4">
-          <button type="button" class="video-facade" aria-label="Reproduzir vídeo 5">
-            <img data-src="https://img.youtube.com/vi/-fBoXK2w2L4/hqdefault.jpg" alt="" class="lazy-thumb">
-            <span class="play-icon" aria-hidden="true">&#9658;</span>
-          </button>
+        <div class="video-slide">
+          <video src="assets/VIDEO_05.mp4" title="Vídeo 5" controls playsinline preload="metadata"></video>
         </div>
-        <div class="video-slide" data-video-id="filtKNX7Rjc">
-          <button type="button" class="video-facade" aria-label="Reproduzir vídeo 6">
-            <img data-src="https://img.youtube.com/vi/filtKNX7Rjc/hqdefault.jpg" alt="" class="lazy-thumb">
-            <span class="play-icon" aria-hidden="true">&#9658;</span>
-          </button>
+        <div class="video-slide">
+          <video src="assets/VIDEO_06.mp4" title="Vídeo 6" controls playsinline preload="metadata"></video>
         </div>
       </div>
       <div class="videos-nav">
@@ -1093,26 +1039,7 @@
       window.open(`https://wa.me/5534991997273?text=${msg}`, '_blank');
     });
   }
-  // ===== CARROSSEL DE VÍDEOS =====
-  // Facade: só cria o <iframe> do YouTube quando o usuário clica no play.
-  // Evita carregar 6 players do YouTube de uma vez (causa comum de o carrossel
-  // "travar" no primeiro vídeo em navegadores mobile).
-  function playVideoSlide(slide){
-    const videoId = slide.getAttribute('data-video-id');
-    const facade = slide.querySelector('.video-facade');
-    if(!videoId || !facade) return;
-    const iframe = document.createElement('iframe');
-    iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&playsinline=1`;
-    iframe.title = facade.getAttribute('aria-label') || 'Vídeo';
-    iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
-    iframe.allowFullscreen = true;
-    iframe.referrerPolicy = 'strict-origin-when-cross-origin';
-    facade.replaceWith(iframe);
-  }
-  document.querySelectorAll('.video-slide .video-facade').forEach(facade => {
-    facade.addEventListener('click', () => playVideoSlide(facade.closest('.video-slide')));
-  });
-
+  // ===== CARROSSEL DE VÍDEOS (arquivos locais em /assets) =====
   const track = document.getElementById('videosTrack');
   const dotsWrap = document.getElementById('videosDots');
   const prevBtn = document.getElementById('videosPrev');
@@ -1120,24 +1047,10 @@
   const isDesktop = () => window.matchMedia('(min-width:981px)').matches;
   const allSlides = Array.from(track.querySelectorAll('.video-slide'));
 
-  // Carrega a miniatura (thumbnail) de um slide manualmente via JS, no
-  // exato momento em que ele precisa aparecer — em vez de deixar o
-  // navegador decidir sozinho quando buscar imagens fora da área visível
-  // (é isso que fazia as miniaturas 2+ nunca aparecerem em alguns celulares).
-  function loadSlideThumb(slide){
-    if(!slide) return;
-    const img = slide.querySelector('img.lazy-thumb[data-src]');
-    if(!img) return;
-    img.src = img.getAttribute('data-src');
-    img.removeAttribute('data-src');
+  // Pausa todos os vídeos (evita áudio tocando fora de tela ao navegar no carrossel)
+  function pauseAllVideos(){
+    track.querySelectorAll('video').forEach(v => v.pause());
   }
-  function loadThumbByIndex(i){
-    if(i < 0 || i >= allSlides.length) return;
-    loadSlideThumb(allSlides[i]);
-  }
-  // Carrega a primeira e a segunda miniaturas assim que a página abre
-  loadThumbByIndex(0);
-  loadThumbByIndex(1);
 
   // ---- MOBILE: 1 vídeo por vez, com dots ----
   let current = 0;
@@ -1150,17 +1063,14 @@
   });
   const dots = dotsWrap.querySelectorAll('span');
   function goToMobile(i){
+    pauseAllVideos();
     current = (i + mobileSlides.length) % mobileSlides.length;
-    // carrega a miniatura do slide atual e a das vizinhas (pra swipe ficar suave)
-    loadThumbByIndex(current);
-    loadThumbByIndex((current + 1) % mobileSlides.length);
-    loadThumbByIndex((current - 1 + mobileSlides.length) % mobileSlides.length);
     track.style.transition = 'transform .5s ease';
     track.style.transform = `translateX(-${current * 100}%)`;
     dots.forEach((d, di) => d.classList.toggle('active', di === current));
   }
 
-  // ---- DESKTOP: 4 vídeos visíveis, avança 1 por vez, loop infinito ----
+  // ---- DESKTOP: 3 vídeos visíveis, avança 1 por vez, loop infinito ----
   let animating = false;
   function stepPx(){
     const children = track.children;
@@ -1169,8 +1079,7 @@
   function nextDesktop(){
     if(animating) return;
     animating = true;
-    // garante que a próxima miniatura a entrar na tela (a 5ª visível) já esteja carregada
-    loadSlideThumb(track.children[4]);
+    pauseAllVideos();
     const step = stepPx();
     track.style.transition = 'transform .5s ease';
     track.style.transform = `translateX(-${step}px)`;
@@ -1185,8 +1094,7 @@
   function prevDesktop(){
     if(animating) return;
     animating = true;
-    // garante que a miniatura que vai entrar pela esquerda já esteja carregada
-    loadSlideThumb(track.lastElementChild);
+    pauseAllVideos();
     track.style.transition = 'none';
     track.insertBefore(track.lastElementChild, track.firstElementChild);
     const step = stepPx();
@@ -1211,10 +1119,6 @@
   window.addEventListener('resize', () => {
     track.style.transition = 'none';
     track.style.transform = isDesktop() ? 'translateX(0)' : `translateX(-${current * 100}%)`;
-    // ao entrar no modo desktop, garante que as 4 miniaturas visíveis estejam carregadas
-    if(isDesktop()){
-      Array.from(track.children).slice(0,4).forEach(loadSlideThumb);
-    }
   });
 
 </script>
