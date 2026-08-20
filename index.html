@@ -1131,6 +1131,10 @@
   });
 
   // ---- MOBILE: 1 vídeo por vez, com dots ----
+  // Em vez de deslizar uma fileira com 6 vídeos usando transform (o que
+  // causava resíduo visual do slide anterior em alguns navegadores mobile),
+  // apenas mostra/esconde o slide atual com display:none. Sem transform,
+  // sem fileira larga — elimina de vez esse tipo de artefato de renderização.
   let current = 0;
   const mobileSlides = allSlides;
   mobileSlides.forEach((_, i) => {
@@ -1140,31 +1144,19 @@
     dotsWrap.appendChild(d);
   });
   const dots = dotsWrap.querySelectorAll('span');
-  // Depois que a transição termina, esconde totalmente (visibility:hidden)
-  // todos os slides que não são o atual — evita qualquer resquício visual
-  // do slide anterior "grudado" na borda depois de deslizar (bug comum de
-  // renderização de <video> com transform em navegadores mobile).
   function syncMobileVisibility(){
     if(isDesktop()) return;
     mobileSlides.forEach((slide, i) => {
-      const visible = i === current;
-      slide.style.visibility = visible ? 'visible' : 'hidden';
-      slide.style.pointerEvents = visible ? 'auto' : 'none';
+      slide.style.display = i === current ? 'block' : 'none';
     });
   }
   function goToMobile(i){
     pauseAllVideos();
     current = (i + mobileSlides.length) % mobileSlides.length;
-    // mostra o slide de destino já no início do movimento (ele está entrando)
-    mobileSlides[current].style.visibility = 'visible';
-    mobileSlides[current].style.pointerEvents = 'auto';
-    track.style.transition = 'transform .5s ease';
-    track.style.transform = `translateX(-${current * 100}%)`;
+    track.style.transition = 'none';
+    track.style.transform = 'none';
+    syncMobileVisibility();
     dots.forEach((d, di) => d.classList.toggle('active', di === current));
-    track.addEventListener('transitionend', function handler(){
-      track.removeEventListener('transitionend', handler);
-      syncMobileVisibility();
-    }, {once:true});
   }
   syncMobileVisibility();
 
@@ -1213,14 +1205,15 @@
   nextBtn.addEventListener('click', () => {
     if(isDesktop()) nextDesktop(); else goToMobile(current + 1);
   });
-  // reseta o transform ao trocar de breakpoint, evitando estado inconsistente
+  // reseta o layout ao trocar de breakpoint, evitando estado inconsistente
   window.addEventListener('resize', () => {
     track.style.transition = 'none';
-    track.style.transform = isDesktop() ? 'translateX(0)' : `translateX(-${current * 100}%)`;
     if(isDesktop()){
-      // no desktop os 3 vídeos precisam estar visíveis ao mesmo tempo
-      mobileSlides.forEach(slide => { slide.style.visibility = 'visible'; slide.style.pointerEvents = 'auto'; });
+      track.style.transform = 'translateX(0)';
+      // no desktop os 3 vídeos precisam estar todos com display normal
+      mobileSlides.forEach(slide => { slide.style.display = ''; });
     } else {
+      track.style.transform = 'none';
       syncMobileVisibility();
     }
   });
