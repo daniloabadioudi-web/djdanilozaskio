@@ -837,22 +837,22 @@
     <div class="videos-carousel reveal">
       <div class="videos-track" id="videosTrack">
         <div class="video-slide">
-          <iframe src="https://www.youtube.com/embed/0-XzCBcEkSk" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" title="Danilo Zaskio - vídeo 1" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+          <iframe src="https://www.youtube.com/embed/0-XzCBcEkSk" loading="lazy" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" title="Danilo Zaskio - vídeo 1" referrerpolicy="strict-origin-when-cross-origin"></iframe>
         </div>
         <div class="video-slide">
-          <iframe src="https://www.youtube.com/embed/B8vslCwj7A8" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" title="Danilo Zaskio - vídeo 2" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+          <iframe src="https://www.youtube.com/embed/B8vslCwj7A8" loading="lazy" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" title="Danilo Zaskio - vídeo 2" referrerpolicy="strict-origin-when-cross-origin"></iframe>
         </div>
         <div class="video-slide">
-          <iframe src="https://www.youtube.com/embed/haNGDVpHglI" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" title="Danilo Zaskio - vídeo 3" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+          <iframe src="https://www.youtube.com/embed/haNGDVpHglI" loading="lazy" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" title="Danilo Zaskio - vídeo 3" referrerpolicy="strict-origin-when-cross-origin"></iframe>
         </div>
         <div class="video-slide">
-          <iframe src="https://www.youtube.com/embed/N-e6DZB82fI" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" title="Danilo Zaskio - vídeo 4" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+          <iframe src="https://www.youtube.com/embed/N-e6DZB82fI" loading="lazy" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" title="Danilo Zaskio - vídeo 4" referrerpolicy="strict-origin-when-cross-origin"></iframe>
         </div>
         <div class="video-slide">
-          <iframe src="https://www.youtube.com/embed/-fBoXK2w2L4" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" title="Danilo Zaskio - vídeo 5" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+          <iframe src="https://www.youtube.com/embed/-fBoXK2w2L4" loading="lazy" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" title="Danilo Zaskio - vídeo 5" referrerpolicy="strict-origin-when-cross-origin"></iframe>
         </div>
         <div class="video-slide">
-          <iframe src="https://www.youtube.com/embed/filtKNX7Rjc" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" title="Danilo Zaskio - vídeo 6" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+          <iframe src="https://www.youtube.com/embed/filtKNX7Rjc" loading="lazy" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" title="Danilo Zaskio - vídeo 6" referrerpolicy="strict-origin-when-cross-origin"></iframe>
         </div>
       </div>
       <div class="videos-nav">
@@ -878,7 +878,7 @@
           <a href="#"><img src="assets/crop_show2.jpg" alt="Efeitos especiais no evento"></a>
         </div>
         <p>Dos maiores hits do funk atual às lendárias músicas da Furacão 2000, Summer Eletrohits e outros sucessos nacionais e internacionais que marcaram época, tudo ganha uma nova identidade em remixes atuais e exclusivos, criando uma experiência musical que conecta diferentes gerações e mantém a pista em alta energia do início ao fim.</p>
-        <p>Para tornar tudo ainda mais marcante, o show conta com uma experiência completa de efeitos com <strong>bazooka de CO₂</strong> e interações, pensados para surpreender os convidados e transformar os momentos mais importantes da festa em experiências inesquecíveis.</p>
+        <p>Para tornar tudo ainda mais marcante, o show conta com uma experiência completa de efeitos e interações: <strong>bazooka de CO₂</strong>, <strong>show pirotécnico</strong> com disparos programados nos momentos certos e <strong>brindes personalizados especiais</strong>, pensados para surpreender os convidados e transformar os momentos mais importantes da festa em experiências inesquecíveis.</p>
       </div>
     </div>
   </div>
@@ -972,7 +972,6 @@
     <p>&copy; 2026 Danilo Zaskio. Todos os direitos reservados.</p>
   </div>
 </footer>
-
 <script>
   // header scroll state
   const header = document.getElementById('siteHeader');
@@ -1011,7 +1010,7 @@
 
       // ===== 1) Envia uma cópia para o Google Sheets =====
       // TODO: troque pela URL do seu Web App do Google Apps Script (veja instruções)
-      const GOOGLE_SHEETS_URL = 'https://script.google.com/macros/s/AKfycbySeEwZIRJJiLr-7U-YjXc1WPDtuTBNJHadZR5l3by0giDfaZKiqGV6E_xsjiCLaurB5A/exec';
+      const GOOGLE_SHEETS_URL = 'COLE_AQUI_A_URL_DO_SEU_APPS_SCRIPT';
       if(GOOGLE_SHEETS_URL && GOOGLE_SHEETS_URL.startsWith('http')){
         fetch(GOOGLE_SHEETS_URL, {
           method: 'POST',
@@ -1030,7 +1029,7 @@
         + (local ? `*Local:* ${local}%0A` : '')
         + (origem ? `*Onde conheceu:* ${origem}` : '');
       // TODO: troque 55SEUNUMERO pelo número real com DDI+DDD (ex: 5534999999999)
-      window.open(`https://wa.me/5534991997273?text=${msg}`, '_blank');
+      window.open(`https://wa.me/55SEUNUMERO?text=${msg}`, '_blank');
     });
   }
   // ===== CARROSSEL DE VÍDEOS =====
