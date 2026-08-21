@@ -179,7 +179,7 @@
   .hero-bg{
     position:relative;
     height:100vh;
-    max-height:860px;
+    max-height:660px;
     min-height:600px;
     padding:88px 0 24px;
     box-sizing:border-box;
@@ -196,9 +196,11 @@
     padding:0 24px;
     display:grid;
     grid-template-columns:1fr 1.1fr;
+    grid-template-rows:1fr;
     gap:48px;
     align-items:stretch;
     box-sizing:border-box;
+    height:100%;
   }
   .hero-logo{
     width:100%;
@@ -533,6 +535,47 @@
     background:#000;
     object-fit:cover;
   }
+  /* Capa (poster) como <img> normal, sobreposta ao vídeo. Diferente do
+     atributo poster do <video>, uma <img> comum é sempre baixada pelo
+     navegador de imediato, mesmo em slides que começam fora da área
+     visível do carrossel — evita a tela ficar preta nos vídeos 2+. */
+  .video-poster{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    padding:0;
+    margin:0;
+    border:0;
+    cursor:pointer;
+    background:#000;
+    display:block;
+    z-index:2;
+  }
+  .video-poster img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+  }
+  .video-poster .play-icon{
+    position:absolute;
+    top:50%;left:50%;
+    transform:translate(-50%,-50%);
+    width:84px;height:84px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    filter:drop-shadow(0 8px 20px rgba(224,20,31,0.55));
+    transition:transform .2s ease;
+  }
+  .video-poster .play-icon svg{
+    width:100%;
+    height:100%;
+    display:block;
+  }
+  .video-poster:hover .play-icon{transform:translate(-50%,-50%) scale(1.08);}
+  .video-poster.is-hidden{display:none;}
   .videos-nav{
     display:flex;
     justify-content:center;
@@ -828,7 +871,7 @@
         <p class="eyebrow">Quem é o Danilo Zaskio?</p>
         <h2 class="section-title" style="margin-bottom:24px;">Experiência que se sente na pista</h2>
         <p>Com <strong>20 anos de carreira</strong>, construiu uma trajetória sólida no mercado de casamentos e aniversários de 15 anos em Uberlândia e região.</p>
-        <p>Parte dessa história começou na noite uberlandense, onde atuou por <strong>8 anos</strong> em casas e eventos marcantes como Lounge, London e Ilha do Sol, além de dividir palco com artistas como <strong>Alok, Léo Santana, Bonde do Tigrão e Jorge &amp; Mateus</strong>. Atualmente é DJ residente do Réveillon Palácio de Cristal, o mais tradicional do Triângulo Mineiro.</p>
+        <p>Parte dessa história começou na noite uberlandense, onde atuou por <strong>8 anos</strong> em casas e eventos marcantes como Lounge, London, Hits, Four House, Café  Moah e Ilha do Sol, além de dividir palco com artistas como <strong>Léo Santana, Bonde do Tigrão, Jorge &amp; Mateus, Kill Your TV, Lifestyle, Mr Catra, Os Hawaianos, Symbolic, Harmonika</strong>. Atualmente é DJ residente do Réveillon Palácio de Cristal, o mais tradicional do Triângulo Mineiro.</p>
         <p>Ao longo da carreira já realizou <strong>mais de 1.200 eventos</strong>. Seu trabalho une experiência e atualização constante, mantendo o repertório alinhado às tendências sem perder identidade.</p>
       </div>
     </div>
@@ -843,22 +886,46 @@
     <div class="videos-carousel reveal">
       <div class="videos-track" id="videosTrack">
         <div class="video-slide">
-          <video src="assets/VIDEO_01.mp4" poster="assets/VIDEO_01.jpg" title="Vídeo 1" controls playsinline preload="metadata"></video>
+          <video class="local-video" src="assets/VIDEO_01.mp4" title="Vídeo 1" playsinline preload="metadata" controls></video>
+          <button type="button" class="video-poster" aria-label="Reproduzir vídeo 1">
+            <img src="assets/VIDEO_01.jpg" alt="">
+            <span class="play-icon" aria-hidden="true"><svg viewBox="-2.4 -2.4 28.80 28.80" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="10" fill="#ffffff"/><path fill-rule="evenodd" clip-rule="evenodd" d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22ZM10.6935 15.8458L15.4137 13.059C16.1954 12.5974 16.1954 11.4026 15.4137 10.941L10.6935 8.15419C9.93371 7.70561 9 8.28947 9 9.21316V14.7868C9 15.7105 9.93371 16.2944 10.6935 15.8458Z" fill="#DE0527"/></svg></span>
+          </button>
         </div>
         <div class="video-slide">
-          <video src="assets/VIDEO_02.mp4" poster="assets/VIDEO_02.jpg" title="Vídeo 2" controls playsinline preload="metadata"></video>
+          <video class="local-video" src="assets/VIDEO_02.mp4" title="Vídeo 2" playsinline preload="metadata" controls></video>
+          <button type="button" class="video-poster" aria-label="Reproduzir vídeo 2">
+            <img src="assets/VIDEO_02.jpg" alt="">
+            <span class="play-icon" aria-hidden="true"><svg viewBox="-2.4 -2.4 28.80 28.80" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="10" fill="#ffffff"/><path fill-rule="evenodd" clip-rule="evenodd" d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22ZM10.6935 15.8458L15.4137 13.059C16.1954 12.5974 16.1954 11.4026 15.4137 10.941L10.6935 8.15419C9.93371 7.70561 9 8.28947 9 9.21316V14.7868C9 15.7105 9.93371 16.2944 10.6935 15.8458Z" fill="#DE0527"/></svg></span>
+          </button>
         </div>
         <div class="video-slide">
-          <video src="assets/VIDEO_03.mp4" poster="assets/VIDEO_03.jpg" title="Vídeo 3" controls playsinline preload="metadata"></video>
+          <video class="local-video" src="assets/VIDEO_03.mp4" title="Vídeo 3" playsinline preload="metadata" controls></video>
+          <button type="button" class="video-poster" aria-label="Reproduzir vídeo 3">
+            <img src="assets/VIDEO_03.jpg" alt="">
+            <span class="play-icon" aria-hidden="true"><svg viewBox="-2.4 -2.4 28.80 28.80" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="10" fill="#ffffff"/><path fill-rule="evenodd" clip-rule="evenodd" d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22ZM10.6935 15.8458L15.4137 13.059C16.1954 12.5974 16.1954 11.4026 15.4137 10.941L10.6935 8.15419C9.93371 7.70561 9 8.28947 9 9.21316V14.7868C9 15.7105 9.93371 16.2944 10.6935 15.8458Z" fill="#DE0527"/></svg></span>
+          </button>
         </div>
         <div class="video-slide">
-          <video src="assets/VIDEO_04.mp4" poster="assets/VIDEO_04.jpg" title="Vídeo 4" controls playsinline preload="metadata"></video>
+          <video class="local-video" src="assets/VIDEO_04.mp4" title="Vídeo 4" playsinline preload="metadata" controls></video>
+          <button type="button" class="video-poster" aria-label="Reproduzir vídeo 4">
+            <img src="assets/VIDEO_04.jpg" alt="">
+            <span class="play-icon" aria-hidden="true"><svg viewBox="-2.4 -2.4 28.80 28.80" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="10" fill="#ffffff"/><path fill-rule="evenodd" clip-rule="evenodd" d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22ZM10.6935 15.8458L15.4137 13.059C16.1954 12.5974 16.1954 11.4026 15.4137 10.941L10.6935 8.15419C9.93371 7.70561 9 8.28947 9 9.21316V14.7868C9 15.7105 9.93371 16.2944 10.6935 15.8458Z" fill="#DE0527"/></svg></span>
+          </button>
         </div>
         <div class="video-slide">
-          <video src="assets/VIDEO_05.mp4" poster="assets/VIDEO_05.jpg" title="Vídeo 5" controls playsinline preload="metadata"></video>
+          <video class="local-video" src="assets/VIDEO_05.mp4" title="Vídeo 5" playsinline preload="metadata" controls></video>
+          <button type="button" class="video-poster" aria-label="Reproduzir vídeo 5">
+            <img src="assets/VIDEO_05.jpg" alt="">
+            <span class="play-icon" aria-hidden="true"><svg viewBox="-2.4 -2.4 28.80 28.80" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="10" fill="#ffffff"/><path fill-rule="evenodd" clip-rule="evenodd" d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22ZM10.6935 15.8458L15.4137 13.059C16.1954 12.5974 16.1954 11.4026 15.4137 10.941L10.6935 8.15419C9.93371 7.70561 9 8.28947 9 9.21316V14.7868C9 15.7105 9.93371 16.2944 10.6935 15.8458Z" fill="#DE0527"/></svg></span>
+          </button>
         </div>
         <div class="video-slide">
-          <video src="assets/VIDEO_06.mp4" poster="assets/VIDEO_06.jpg" title="Vídeo 6" controls playsinline preload="metadata"></video>
+          <video class="local-video" src="assets/VIDEO_06.mp4" title="Vídeo 6" playsinline preload="metadata" controls></video>
+          <button type="button" class="video-poster" aria-label="Reproduzir vídeo 6">
+            <img src="assets/VIDEO_06.jpg" alt="">
+            <span class="play-icon" aria-hidden="true"><svg viewBox="-2.4 -2.4 28.80 28.80" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="10" fill="#ffffff"/><path fill-rule="evenodd" clip-rule="evenodd" d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22ZM10.6935 15.8458L15.4137 13.059C16.1954 12.5974 16.1954 11.4026 15.4137 10.941L10.6935 8.15419C9.93371 7.70561 9 8.28947 9 9.21316V14.7868C9 15.7105 9.93371 16.2944 10.6935 15.8458Z" fill="#DE0527"/></svg></span>
+          </button>
         </div>
       </div>
       <div class="videos-nav">
@@ -1047,12 +1114,29 @@
   const isDesktop = () => window.matchMedia('(min-width:981px)').matches;
   const allSlides = Array.from(track.querySelectorAll('.video-slide'));
 
-  // Pausa todos os vídeos (evita áudio tocando fora de tela ao navegar no carrossel)
+  // Pausa todos os vídeos e volta a mostrar a capa (evita áudio tocando fora
+  // de tela ao navegar, e evita depender do <video> renderizar sozinho
+  // quando volta a ficar visível)
   function pauseAllVideos(){
     track.querySelectorAll('video').forEach(v => v.pause());
+    track.querySelectorAll('.video-poster').forEach(p => p.classList.remove('is-hidden'));
   }
 
+  // Clique na capa: esconde a capa e toca o vídeo
+  track.querySelectorAll('.video-poster').forEach(poster => {
+    poster.addEventListener('click', () => {
+      const video = poster.previousElementSibling;
+      if(!video) return;
+      poster.classList.add('is-hidden');
+      video.play().catch(() => {});
+    });
+  });
+
   // ---- MOBILE: 1 vídeo por vez, com dots ----
+  // Em vez de deslizar uma fileira com 6 vídeos usando transform (o que
+  // causava resíduo visual do slide anterior em alguns navegadores mobile),
+  // apenas mostra/esconde o slide atual com display:none. Sem transform,
+  // sem fileira larga — elimina de vez esse tipo de artefato de renderização.
   let current = 0;
   const mobileSlides = allSlides;
   mobileSlides.forEach((_, i) => {
@@ -1062,13 +1146,21 @@
     dotsWrap.appendChild(d);
   });
   const dots = dotsWrap.querySelectorAll('span');
+  function syncMobileVisibility(){
+    if(isDesktop()) return;
+    mobileSlides.forEach((slide, i) => {
+      slide.style.display = i === current ? 'block' : 'none';
+    });
+  }
   function goToMobile(i){
     pauseAllVideos();
     current = (i + mobileSlides.length) % mobileSlides.length;
-    track.style.transition = 'transform .5s ease';
-    track.style.transform = `translateX(-${current * 100}%)`;
+    track.style.transition = 'none';
+    track.style.transform = 'none';
+    syncMobileVisibility();
     dots.forEach((d, di) => d.classList.toggle('active', di === current));
   }
+  syncMobileVisibility();
 
   // ---- DESKTOP: 3 vídeos visíveis, avança 1 por vez, loop infinito ----
   let animating = false;
@@ -1115,10 +1207,17 @@
   nextBtn.addEventListener('click', () => {
     if(isDesktop()) nextDesktop(); else goToMobile(current + 1);
   });
-  // reseta o transform ao trocar de breakpoint, evitando estado inconsistente
+  // reseta o layout ao trocar de breakpoint, evitando estado inconsistente
   window.addEventListener('resize', () => {
     track.style.transition = 'none';
-    track.style.transform = isDesktop() ? 'translateX(0)' : `translateX(-${current * 100}%)`;
+    if(isDesktop()){
+      track.style.transform = 'translateX(0)';
+      // no desktop os 3 vídeos precisam estar todos com display normal
+      mobileSlides.forEach(slide => { slide.style.display = ''; });
+    } else {
+      track.style.transform = 'none';
+      syncMobileVisibility();
+    }
   });
 
 </script>
