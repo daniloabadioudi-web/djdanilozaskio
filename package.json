@@ -1,0 +1,29 @@
+{
+  "name": "djdanilozaskio",
+  "version": "1.0.0",
+  "description": "DJ Danilo Zaskio - Website profissional para eventos",
+  "main": "index.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/daniloabadioudi-web/djdanilozaskio.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/daniloabadioudi-web/djdanilozaskio/issues"
+  },
+  "homepage": "https://github.com/daniloabadioudi-web/djdanilozaskio#readme",
+  "dependencies": {
+    "@vercel/speed-insights": "^2.0.0"
+  },
+  "devDependencies": {
+    "vite": "^8.2.2"
+  }
+}
